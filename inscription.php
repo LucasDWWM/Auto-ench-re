@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire de contact</title>
+    <title>Inscription</title>
 </head>
 <body>
-    <h1>Contactez-nous</h1>
-    <form action="/contact.php" method="POST">
+    <h1>Inscription</h1>
+    <form action="traitement_inscription.php" method="POST">
         <div>
             <label for="nom">Nom :</label>
             <input type="text" id="nom" name="nom" required><br><br>
@@ -20,17 +20,11 @@
             <label for="email">Email :</label>
             <input type="email" id="email" name="email" required><br><br>
         </div>
-
         <div>
-            <label for="telephone">Numéro de téléphone :</label>
-            <input type="tel" id="telephone" name="telephone" required>
+            <label for="mot_de_passe">Mot de passe :</label>
+            <input type="password" id="mot_de_passe" name="mot_de_passe" required><br><br>
         </div>
-        <div>
-            <label for="message">Message :</label><br>
-            <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
-        </div>
-
-        <input type="submit" value="Envoyer">
+        <input type="submit" value="S'inscrire"><br><br>
     </form>
 </body>
 </html>
