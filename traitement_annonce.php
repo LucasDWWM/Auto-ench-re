@@ -21,15 +21,24 @@ $description = $_POST['description'];
 $prix_reserve = $_POST['prix_reserve'];
 $date_fin = $_POST['date_fin'];
 
-// Préparation de la requête d'insertion
-$requete = $connexion->prepare("INSERT INTO vehicule (Modele, Marque, Puissance, année, description) VALUES (?, ?, ?, ?, ?)");
-$requete->execute([$modele, $marque, $puissance, $annee, $description]);
+// Insérer le véhicule dans la base de données
+$requete_vehicule = $connexion->prepare("INSERT INTO vehicule (Modele, Marque, Puissance, année, description) VALUES (?, ?, ?, ?, ?)");
+$requete_vehicule->execute([$modele, $marque, $puissance, $annee, $description]);
+$id_vehicule = $connexion->lastInsertId();
 
-$id_vehicule = $connexion->lastInsertId(); // Récupérer l'ID de la voiture insérée
+// Vérifiez si l'utilisateur est connecté
+session_start();
+if (!isset($_SESSION['id_utilisateur'])) {
+    // Redirigez l'utilisateur vers la page de connexion ou affichez un message d'erreur
+    exit("Vous devez être connecté pour ajouter une annonce.");
+}
+
+// Récupérez l'ID de l'utilisateur à partir de la session
+$id_utilisateur = $_SESSION['id_utilisateur'];
 
 // Insérer l'annonce dans la base de données
-$requete_annonce = $connexion->prepare("INSERT INTO annonces (id_vehicule, prix_reserve, date_fin) VALUES (?, ?, ?)");
-$requete_annonce->execute([$id_vehicule, $prix_reserve, $date_fin]);
+$requete_annonce = $connexion->prepare("INSERT INTO annonces (id_utilisateur, id_vehicule, prix_reserve, date_fin) VALUES (?, ?, ?, ?)");
+$requete_annonce->execute([$id_utilisateur, $id_vehicule, $prix_reserve, $date_fin]);
 
 echo "Annonce de voiture ajoutée avec succès.";
 

@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-<form action="ajouter_annonce.php" method="post">
+<form action="traitement_annonce.php" method="post">
     <label for="modele">Modèle :</label>
     <input type="text" id="modele" name="modele" required><br>
     
