@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  href="styles.css">
+    <title>Liste des offres</title>
+</head>
+<body>
+
 <?php
 // Connexion à la base de données
 $serveur = "localhost";
@@ -40,3 +50,5 @@ if ($resultat_offres->num_rows > 0) {
 // Fermer la connexion à la base de données
 $connexion->close();
 ?>
+</body>
+</html>

@@ -1,0 +1,23 @@
+body {
+    background-color: rgb(105, 106, 194); /* Couleur de fond bleue */
+    font-family: Arial, sans-serif; /* Police de caractères */
+    color: white; /* Couleur du texte */
+}
+.container {
+    width: 80%; /* Largeur de la container */
+    margin: 0 auto; /* Centrer la container */
+    background-color: white; /* Couleur de fond blanche */
+    padding: 20px; /* Espacement intérieur */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Ombre portée */
+}
+h1 {
+    background-color: gray; /* Couleur de fond grise */
+    display: inline-block; /* Affichage en ligne pour permettre la mise en ligne */
+    padding: 10px; /* Espacement intérieur */
+    border-radius: 5px; /* Coins arrondis */
+}
+h2 {
+    display: inline-block; /* Affichage en ligne */
+    margin-left: 20px; /* Espacement entre les titres */
+}
