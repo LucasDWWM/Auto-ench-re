@@ -23,12 +23,13 @@ if ($resultat_offres->num_rows > 0) {
     // Parcourir les résultats et afficher chaque offre dans une liste
     while ($row = $resultat_offres->fetch_assoc()) {
         echo "<li>";
-        // Vérifier si la clé existe avant de l'afficher
-        echo "<strong>Marque:</strong> " . (isset($row['marque']) ? $row['marque'] : 'A') . " Test 1 ";
-        echo "<strong>Modèle:</strong> " . (isset($row['modele']) ? $row['modele'] : 'B') . " Test 2 ";
-        echo "<strong>Année:</strong> " . (isset($row['annee']) ? $row['annee'] : 'C') . " Test 3 ";
-        echo "<strong>Puissance:</strong> " . (isset($row['puissance']) ? $row['puissance'] : 'D') . " Test 4 ";
-        echo "<strong>Description:</strong> " . (isset($row['description']) ? $row['description'] : 'Voici une description');
+        // Afficher les détails de l'offre avec un lien vers la page d'offre
+       // On crée un lien vers offre.php avec l'ID de l'annonce en tant que paramètre GET
+        echo "<strong>Marque:</strong> <a href='offre.php?id={$row['id_annonce']}'>{$row['marque']}</a> - ";
+        echo "<strong>Modèle:</strong> {$row['modele']} - ";
+        echo "<strong>Année:</strong> {$row['annee']} - ";
+        echo "<strong>Puissance:</strong> {$row['puissance']} - ";
+        echo "<strong>Description:</strong> {$row['description']}";
         echo "</li>";
     }
     echo "</ul>";

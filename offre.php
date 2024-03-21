@@ -7,35 +7,39 @@ if (!isset($_SESSION['id_utilisateur'])) {
     exit();
 }
 
+// Vérification si l'ID de l'annonce est passé dans l'URL
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    echo "<p>Identifiant d'offre non valide.</p>";
+    exit();
+}
+
+// Récupération de l'ID de l'annonce depuis l'URL
+$annonceId = $_GET['id'];
+
 // Connexion à la base de données
 $serveur = "localhost";
 $utilisateur = "root";
 $mot_de_passe = ""; // Mettez ici le mot de passe de votre base de données
 $base_de_donnees = "auto-enchère";
 
-$connexion = new mysqli($serveur, $utilisateur, $mot_de_passe, $base_de_donnees);
-
-// Vérifier la connexion
-if ($connexion->connect_error) {
-    die("Échec de la connexion à la base de données: " . $connexion->connect_error);
-}
-
-// Récupérer les détails de l'offre à partir de l'identifiant passé dans l'URL
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $annonceId = $_GET['id'];
+try {
+    $connexion = new PDO("mysql:host=$serveur;dbname=$base_de_donnees", $utilisateur, $mot_de_passe);
+    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Requête pour récupérer les détails de l'offre
-    $requete_offre = "SELECT * FROM annonces WHERE id_annonce = $annonceId";
-    $resultat_offre = $connexion->query($requete_offre);
+    $requete_offre = "SELECT * FROM annonces WHERE id_annonce = id_annonce";
+    $statement = $connexion->prepare($requete_offre);
+    $statement->bindParam('id_annonce', $annonceId);
+    $statement->execute();
 
     // Vérifier si l'offre existe
-    if ($resultat_offre->num_rows > 0) {
-        $row = $resultat_offre->fetch_assoc();
+    if ($statement->rowCount() > 0) {
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
         echo "<h1>Détails de l'offre</h1>";
-        echo "<p>Marque: {$row['marque']}</p>";
-        echo "<p>Modèle: {$row['modele']}</p>";
-        echo "<p>Année: {$row['annee']}</p>";
-        echo "<p>Puissance: {$row['puissance']}</p>";
+        echo "<p>Marque: {$row['Modele']}</p>";
+        echo "<p>Modèle: {$row['Modele']}</p>";
+        echo "<p>Année: {$row['année']}</p>";
+        echo "<p>Puissance: {$row['Puissance']}</p>";
         echo "<p>Description: {$row['description']}</p>";
 
         // Vérifier si la date limite d'enchère est dépassée
@@ -49,10 +53,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     } else {
         echo "<p>Aucune offre trouvée.</p>";
     }
-} else {
-    echo "<p>Identifiant d'offre non valide.</p>";
+} catch (PDOException $e) {
+    echo "Erreur de connexion à la base de données : " . $e->getMessage();
 }
-
-// Fermer la connexion à la base de données
-$connexion->close();
 ?>
